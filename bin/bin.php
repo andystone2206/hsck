@@ -21,7 +21,7 @@ function getHtml(string $url): string
 {
     try {
         global $cookie;
-        $body = shell_exec('curl --connect-timeout 10 -m 30 -H "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36" --cookie "' . $cookie . '" ' . $url . '  2>&1');
+        $body = shell_exec('curl --connect-timeout 100 -m 300 -H "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36" --cookie "' . $cookie . '" ' . $url . '  2>&1');
 
         return $body ?: '';
     } catch (\Throwable $th) {
@@ -36,7 +36,7 @@ function getHtml(string $url): string
 function getHeader(string $url): string
 {
     try {
-        $header = shell_exec('curl  --connect-timeout 10 -m 30 -H "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36" -I ' . $url . '  2>&1');
+        $header = shell_exec('curl  --connect-timeout 100 -m 300 -H "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36" -I ' . $url . '  2>&1');
 
         return $header ?: '';
     } catch (\Throwable $th) {
@@ -51,7 +51,7 @@ function getHeader(string $url): string
 function getHeader2(string $url, string $host): string
 {
     try {
-        $curl = 'curl  --connect-timeout 10 -m 30 -H "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36" --referer ' . $host . '/ -I ' . $url;
+        $curl = 'curl  --connect-timeout 100 -m 300 -H "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36" --referer ' . $host . '/ -I ' . $url;
         $header = shell_exec($curl);
         return $header ?: '';
     } catch (\Throwable $th) {
@@ -99,7 +99,7 @@ function checkHostContent(string $tmp_host)
 {
     echo "[debug] host check {$tmp_host}\n";
     $html = getHtml($tmp_host);
-    if (strlen($html) > 20000 && strstr($html, "stui-warp-content")) {
+    if (strstr($html, "stui-warp-content")) {
         $ret = strstr($html, "最近更新");
         if ($ret) {
             $num = preg_match_all('/\/vodtype\/(\d+)\.html"><span\sclass="count\spull-right">(\d+)<\/span>/', $html, $matches);
@@ -122,7 +122,7 @@ function checkHostContent(string $tmp_host)
             }
         }
     }
-    if (strstr($html, 'strU=') && strstr($html, 'id="hao123"')) {
+    if (strstr($html, 'strU=')) {
         $num = preg_match('/strU="(https?:\/\/[a-zA-Z0-9:\/\.]+\?u=?)"/', $html, $matches);
         if ($num) {
             $url = $matches[1] . "{$tmp_host}/&p=/";
