@@ -345,19 +345,19 @@ function start()
         }
         check_image_host();
         system('php out.php');
-        shell_exec('curl -v "https://wxpusher.zjiecode.com/api/send/message/?appToken=AT_FCkiP9vhGaR5yfMUQQEXtAYrbF0I6rOq&content=hsckUpdate&topicId=10033"');
+        
     } else if (check_image_host()) {
         system('php out.php');
-        shell_exec('curl -v "https://wxpusher.zjiecode.com/api/send/message/?appToken=AT_FCkiP9vhGaR5yfMUQQEXtAYrbF0I6rOq&content=hsckImageUrlUpdate&uid=UID_xKkkEccqH4wC2CqOY48uCMYZqVWU"');
+        
     } else {
         echo "no update!\n";
-        shell_exec('curl -v "https://wxpusher.zjiecode.com/api/send/message/?appToken=AT_FCkiP9vhGaR5yfMUQQEXtAYrbF0I6rOq&content=hsckNoUpdate&uid=UID_xKkkEccqH4wC2CqOY48uCMYZqVWU"');
+        
     }
 }
 
 if (!checkHost()) {
     echo "[error] check host error! script stop\n";
-    shell_exec('curl -v "https://wxpusher.zjiecode.com/api/send/message/?appToken=AT_FCkiP9vhGaR5yfMUQQEXtAYrbF0I6rOq&content=hsckCheckHostError&uid=UID_xKkkEccqH4wC2CqOY48uCMYZqVWU"');
+   
     exit(0);
 }
 
